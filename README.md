@@ -1,4 +1,6 @@
-  After playing all of Riots Games, reading all of their lore, and watching their Tv show Arcane. We fell in love with the universe of Runeterra so with our expertise of 6+ years of Game Development we decided to give our own take of a Riot MMO. 
+  ![image](https://github.com/user-attachments/assets/6bee0b0d-c862-4b3f-847d-f4f85a55bfde)
+
+After playing all of Riots Games, reading all of their lore, and watching their Tv show Arcane. We fell in love with the universe of Runeterra so with our expertise of 6+ years of Game Development we decided to give our own take of a Riot MMO. 
 
   In this project we bring League Of Legends to life starting with the signature cities Piltover and Zaun. In these cities you choose your path and grind out missions all to better your character and their specific abilites.
 
