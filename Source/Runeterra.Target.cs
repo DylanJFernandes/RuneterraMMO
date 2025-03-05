@@ -11,5 +11,6 @@ public class RuneterraTarget : TargetRules
 		DefaultBuildSettings = BuildSettingsVersion.V5;
 		IncludeOrderVersion = EngineIncludeOrderVersion.Unreal5_5;
 		ExtraModuleNames.Add("Runeterra");
-	}
+        ExtraModuleNames.Add("DedicatedServers");
+    }
 }

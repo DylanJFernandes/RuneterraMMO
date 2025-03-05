@@ -7,6 +7,14 @@
 		{
 			"Name": "Runeterra",
 			"Type": "Runtime",
+			"LoadingPhase": "Default",
+			"AdditionalDependencies": [
+				"Engine"
+			]
+		},
+		{
+			"Name": "DedicatedServers",
+			"Type": "Runtime",
 			"LoadingPhase": "Default"
 		}
 	],
@@ -17,6 +25,10 @@
 			"TargetAllowList": [
 				"Editor"
 			]
+		},
+		{
+			"Name": "GameLiftPlugin",
+			"Enabled": true
 		}
 	]
 }
