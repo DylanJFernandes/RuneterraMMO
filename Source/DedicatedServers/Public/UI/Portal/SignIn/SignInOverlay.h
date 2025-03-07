@@ -24,9 +24,6 @@ class DEDICATEDSERVERS_API USignInOverlay : public UUserWidget
 
 public:
 
-	UPROPERTY(meta = (BindWidget))
-	TObjectPtr<UJoinGame> JoinGameWidget;
-
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<UPortalManager> PortalManagerClass;
 
@@ -51,28 +48,9 @@ private:
 
 	UPROPERTY(meta = (BindWidget))
 	TObjectPtr<USuccessConfirmedPage> SuccessConfirmedPage;
-
-	UPROPERTY(meta = (BindWidget))
-	TObjectPtr<UButton> Button_SignIn_Test;
-
-	UPROPERTY(meta = (BindWidget))
-	TObjectPtr<UButton> Button_SignUp_Test;
-	
-	UPROPERTY(meta = (BindWidget))
-	TObjectPtr<UButton> Button_ConfirmSignUp_Test;
-
-	UPROPERTY(meta = (BindWidget))
-	TObjectPtr<UButton> Button_SuccessConfirmed_Test;
-	
 	
 	UPROPERTY()
 	TObjectPtr<UPortalManager> PortalManager;
-
-	UFUNCTION()
-	void OnJoinGameButtonCLicked();
-
-	UFUNCTION()
-	void UpdateJoinGameStatusMessage(const FString& StatusMessage, bool bShouldResetJoinGameButton);
 
 	UFUNCTION()
 	void ShowSignInPage();
@@ -86,7 +64,18 @@ private:
 	UFUNCTION()
 	void ShowSuccessConfirmedPage();
 
-	
+	UFUNCTION()
+	void SignInButtonClicked();
 
-	
+	UFUNCTION()
+	void SignUpButtonClicked();
+
+	UFUNCTION()
+	void ConfirmButtonClicked();
+
+	UFUNCTION()
+	void OnSignUpSucceeded();
+
+	UFUNCTION()
+	void OnConfirmSucceeded();
 };

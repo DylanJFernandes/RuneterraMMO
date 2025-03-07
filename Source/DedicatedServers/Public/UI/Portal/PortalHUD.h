@@ -4,12 +4,14 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/HUD.h"
+#include "UI/Interfaces/HUDManagment.h"
 #include "PortalHUD.generated.h"
 
+class UDashboardOverlay;
 class USignInOverlay;
 
 UCLASS()
-class DEDICATEDSERVERS_API APortalHUD : public AHUD
+class DEDICATEDSERVERS_API APortalHUD : public AHUD ,public IHUDManagment
 {
 	GENERATED_BODY()
 
@@ -18,12 +20,19 @@ public:
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<USignInOverlay> SignInOverlayClass;
 
-protected:
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<UDashboardOverlay> DashboardOverlayClass;
 
+	virtual void OnSignIn() override;
+	virtual void OnSignOut() override;
+protected:
 	virtual void BeginPlay() override;
 
 private:
 
 	UPROPERTY()
 	TObjectPtr<USignInOverlay> SignInOverlay;
+
+	UPROPERTY()
+	TObjectPtr<UDashboardOverlay> DashboardOverlay;
 };

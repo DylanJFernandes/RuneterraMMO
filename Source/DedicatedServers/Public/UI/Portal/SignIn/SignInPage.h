@@ -6,6 +6,7 @@
 #include "Blueprint/UserWidget.h"
 #include "SignInPage.generated.h"
 
+class UCheckBox;
 class UButton;
 class UEditableTextBox;
 class UTextBlock;
@@ -36,5 +37,16 @@ public:
 	UPROPERTY(meta = (BindWidget))
 	TObjectPtr<UTextBlock> TextBlock_StatusMessage;
 
+	UPROPERTY(meta = (BindWidget))
+	TObjectPtr<UCheckBox> CheckBox_ShowPassword;
+
+	UFUNCTION()
+	void UpdateStatusMessage(const FString& Message, bool bShouldResetWidgets);
+
+protected:
+	virtual void NativeConstruct() override;
+private:
 	
+	UFUNCTION()
+	void ShowPassword(bool bIsChecked);
 };

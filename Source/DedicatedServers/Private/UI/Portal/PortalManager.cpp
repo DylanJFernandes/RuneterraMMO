@@ -1,120 +1,44 @@
 ﻿// Fill out your copyright notice in the Description page of Project Settings.
 
+
 #include "UI/Portal/PortalManager.h"
 
 #include "HttpModule.h"
 #include "JsonObjectConverter.h"
 #include "Data/API/APIData.h"
-#include "GameFramework/PlayerState.h"
 #include "GamePlayTags/DedicatedServerTags.h"
 #include "Interfaces/IHttpResponse.h"
 #include "Kismet/GameplayStatics.h"
-#include "UI/HTTP/HTTPRequestTypes.h"
+#include "Player/DSLocalPlayerSubsystem.h"
+#include "UI/Interfaces/HUDManagment.h"
+#include "GameFramework/HUD.h"
 
-void UPortalManager::JoinGameSession()
+void UPortalManager::SignIn(const FString& Username, const FString& Password)
 {
-	BroadcastJoinGameSessionMessage.Broadcast(TEXT("Searching for Game Sessions..."), false);
-
+	SignInStatusMessageDelegate.Broadcast(TEXT("Signing in..."), false);
 	check(APIData);
 	TSharedRef<IHttpRequest> Request = FHttpModule::Get().CreateRequest();
-	Request->OnProcessRequestComplete().BindUObject(this, &UPortalManager::FindOrCreateGameSession_Response);
-	const FString APIUrl = APIData->GetAPIEndpoint(DedicatedServerTags::GameSessionsAPI::FindOrCreateGameSession);
-	Request->SetURL(APIUrl);
-	Request->SetVerb(TEXT("POST"));
-	Request->SetHeader(TEXT("Content-Type"), TEXT("application/json"));
-	Request->ProcessRequest();
-}
-
-void UPortalManager::FindOrCreateGameSession_Response(FHttpRequestPtr Request, FHttpResponsePtr Response, bool bWasSuccessful)
-{	
-	if (!bWasSuccessful)
-	{
-		BroadcastJoinGameSessionMessage.Broadcast(HTTPStatusMessages::SomethingWentWrong, true);
-	}
-	
-	TSharedPtr<FJsonObject> JsonObject;
-	TSharedRef<TJsonReader<>> JsonReader = TJsonReaderFactory<>::Create(Response->GetContentAsString());
-	if (FJsonSerializer::Deserialize(JsonReader, JsonObject))
-	{
-		if (ContainsErrors(JsonObject))
-		{
-			BroadcastJoinGameSessionMessage.Broadcast(HTTPStatusMessages::SomethingWentWrong, true);
-		}
-
-		FDSGameSession GameSession;
-		FJsonObjectConverter::JsonObjectToUStruct(JsonObject.ToSharedRef(), &GameSession);
-
-		const FString GameSessionId = GameSession.GameSessionId;
-		const FString GameSessionStatus = GameSession.Status;
-
-		HandleGameSessionStatus(GameSessionStatus, GameSessionId);
-	}
-}
-
-
-
-FString UPortalManager::GetUniquePlayerId() const
-{
-	APlayerController* LocalPlayerController = GEngine->GetFirstLocalPlayerController(GetWorld());
-	if (IsValid(LocalPlayerController))
-	{
-		APlayerState* LocalPlayerState = LocalPlayerController->GetPlayerState<APlayerState>();
-		if (IsValid(LocalPlayerState) && LocalPlayerState->GetUniqueId().IsValid())
-		{
-			return TEXT("Player_") + FString::FromInt(LocalPlayerState->GetUniqueID());
-		}
-	}
-	return FString();
-}
-
-void UPortalManager::HandleGameSessionStatus(const FString& Status, const FString& SessionId)
-{
-	if (Status.Equals(TEXT("ACTIVE")))
-	{
-		BroadcastJoinGameSessionMessage.Broadcast(TEXT("Found active Game Session. Creating a Player Session..."), false);
-		TryCreatePlayerSession(GetUniquePlayerId(), SessionId);
-	}
-	else if (Status.Equals(TEXT("ACTIVATING")))
-	{
-		FTimerDelegate CreateSessionDelegate;
-		CreateSessionDelegate.BindUObject(this, &UPortalManager::JoinGameSession);
-		APlayerController* LocalPlayerController = GEngine->GetFirstLocalPlayerController(GetWorld());
-		if (IsValid(LocalPlayerController))
-		{
-			LocalPlayerController->GetWorldTimerManager().SetTimer(CreateSessionTimer, CreateSessionDelegate, 0.5f, false);
-		}
-	}
-	else
-	{
-		BroadcastJoinGameSessionMessage.Broadcast(HTTPStatusMessages::SomethingWentWrong, true);
-	}
-}
-
-void UPortalManager::TryCreatePlayerSession(const FString& PlayerId, const FString& GameSessionId)
-{
-	check(APIData);
-	TSharedRef<IHttpRequest> Request = FHttpModule::Get().CreateRequest();
-	Request->OnProcessRequestComplete().BindUObject(this, &UPortalManager::CreatePlayerSession_Response);
-	const FString APIUrl = APIData->GetAPIEndpoint(DedicatedServerTags::GameSessionsAPI::CreatePlayerSession);
+	Request->OnProcessRequestComplete().BindUObject(this, &UPortalManager::SignIn_Response);
+	const FString APIUrl = APIData->GetAPIEndpoint(DedicatedServerTags::PortalAPI::SignIn);
 	Request->SetURL(APIUrl);
 	Request->SetVerb(TEXT("POST"));
 	Request->SetHeader(TEXT("Content-Type"), TEXT("application/json"));
 
+	LastUsername = Username;
 	TMap<FString, FString> Params = {
-		{ TEXT("playerId"), PlayerId },
-		{ TEXT("gameSessionId"), GameSessionId }
+		{ TEXT("username"), Username },
+		{ TEXT("password"), Password }
 	};
 	const FString Content = SerializeJsonContent(Params);
-	
 	Request->SetContentAsString(Content);
 	Request->ProcessRequest();
 }
 
-void UPortalManager::CreatePlayerSession_Response(FHttpRequestPtr Request, FHttpResponsePtr Response, bool bWasSuccessful)
+void UPortalManager::SignIn_Response(FHttpRequestPtr Request, FHttpResponsePtr Response, bool bWasSuccessful)
 {
 	if (!bWasSuccessful)
 	{
-		BroadcastJoinGameSessionMessage.Broadcast(HTTPStatusMessages::SomethingWentWrong, true);
+		SignInStatusMessageDelegate.Broadcast(HTTPStatusMessages::SomethingWentWrong, true);
 	}
 
 	TSharedPtr<FJsonObject> JsonObject;
@@ -123,17 +47,223 @@ void UPortalManager::CreatePlayerSession_Response(FHttpRequestPtr Request, FHttp
 	{
 		if (ContainsErrors(JsonObject))
 		{
-			BroadcastJoinGameSessionMessage.Broadcast(HTTPStatusMessages::SomethingWentWrong, true);
+			SignInStatusMessageDelegate.Broadcast(HTTPStatusMessages::SomethingWentWrong, true);
+			return;
 		}
 
-		FDSPlayerSession PlayerSession;
-		FJsonObjectConverter::JsonObjectToUStruct(JsonObject.ToSharedRef(), &PlayerSession);
-		PlayerSession.Dump();
+		FDSInitiateAuthResponse InitiateAuthResponse;
+		FJsonObjectConverter::JsonObjectToUStruct(JsonObject.ToSharedRef(), &InitiateAuthResponse);
+		InitiateAuthResponse.Dump();
 
-		const FString IpAndPort = PlayerSession.IpAddress + TEXT(":") + FString::FromInt(PlayerSession.Port);
-		const FName Address(*IpAndPort);
-		UGameplayStatics::OpenLevel(this, Address);
+		UDSLocalPlayerSubsystem* LocalPlayerSubsystem = GetDSLocalPlayerSubsystem();
+		if (IsValid(LocalPlayerSubsystem))
+		{
+			LocalPlayerSubsystem->InitializeTokens(InitiateAuthResponse.AuthenticationResult, this);
+			LocalPlayerSubsystem->Username = LastUsername;
+			LocalPlayerSubsystem->Email = InitiateAuthResponse.email;
+		}
+
+		APlayerController* LocalPlayerController = GEngine->GetFirstLocalPlayerController(GetWorld());
+		if (IsValid(LocalPlayerController))
+		{
+			if (IHUDManagment* HUDManagementInterface = Cast<IHUDManagment>(LocalPlayerController->GetHUD()))
+			{
+				HUDManagementInterface->OnSignIn();
+			}
+		}
 	}
-	
 }
 
+void UPortalManager::SignUp(const FString& Username, const FString& Password, const FString& Email)
+{
+	SignUpStatusMessageDelegate.Broadcast(TEXT("Creating a new account..."), false);
+	check(APIData);
+	TSharedRef<IHttpRequest> Request = FHttpModule::Get().CreateRequest();
+	Request->OnProcessRequestComplete().BindUObject(this, &UPortalManager::SignUp_Response);
+	const FString APIUrl = APIData->GetAPIEndpoint(DedicatedServerTags::PortalAPI::SignUp);
+	Request->SetURL(APIUrl);
+	Request->SetVerb(TEXT("POST"));
+	Request->SetHeader(TEXT("Content-Type"), TEXT("application/json"));
+
+	LastUsername = Username;
+	TMap<FString, FString> Params = {
+		{ TEXT("username"), Username },
+		{ TEXT("password"), Password },
+		{ TEXT("email"), Email }
+	};
+	const FString Content = SerializeJsonContent(Params);
+	Request->SetContentAsString(Content);
+	Request->ProcessRequest();
+}
+
+void UPortalManager::SignUp_Response(FHttpRequestPtr Request, FHttpResponsePtr Response, bool bWasSuccessful)
+{
+	if (!bWasSuccessful)
+	{
+		SignUpStatusMessageDelegate.Broadcast(HTTPStatusMessages::SomethingWentWrong, true);
+	}
+
+	TSharedPtr<FJsonObject> JsonObject;
+	TSharedRef<TJsonReader<>> JsonReader = TJsonReaderFactory<>::Create(Response->GetContentAsString());
+	if (FJsonSerializer::Deserialize(JsonReader, JsonObject))
+	{
+		if (ContainsErrors(JsonObject))
+		{
+			SignUpStatusMessageDelegate.Broadcast(HTTPStatusMessages::SomethingWentWrong, true);
+			return;
+		}
+		
+		FJsonObjectConverter::JsonObjectToUStruct(JsonObject.ToSharedRef(), &LastSignUpResponse);
+		OnSignUpSucceeded.Broadcast();
+	}
+}
+
+void UPortalManager::Confirm(const FString& ConfirmationCode)
+{
+	check(APIData);
+	ConfirmStatusMessageDelegate.Broadcast(TEXT("Checking verification code..."), false);
+	TSharedRef<IHttpRequest> Request = FHttpModule::Get().CreateRequest();
+	Request->OnProcessRequestComplete().BindUObject(this, &UPortalManager::Confirm_Response);
+	const FString APIUrl = APIData->GetAPIEndpoint(DedicatedServerTags::PortalAPI::ConfirmSignUp);
+	Request->SetURL(APIUrl);
+	Request->SetVerb(TEXT("PUT"));
+	Request->SetHeader(TEXT("Content-Type"), TEXT("application/json"));
+
+	TMap<FString, FString> Params = {
+		{ TEXT("username"), LastUsername },
+		{ TEXT("confirmationCode"), ConfirmationCode }
+	};
+	const FString Content = SerializeJsonContent(Params);
+	Request->SetContentAsString(Content);
+	Request->ProcessRequest();
+}
+
+void UPortalManager::Confirm_Response(FHttpRequestPtr Request, FHttpResponsePtr Response, bool bWasSuccessful)
+{
+	if (!bWasSuccessful)
+	{
+		ConfirmStatusMessageDelegate.Broadcast(HTTPStatusMessages::SomethingWentWrong, true);
+	}
+
+	TSharedPtr<FJsonObject> JsonObject;
+	TSharedRef<TJsonReader<>> JsonReader = TJsonReaderFactory<>::Create(Response->GetContentAsString());
+	if (FJsonSerializer::Deserialize(JsonReader, JsonObject))
+	{
+		if (ContainsErrors(JsonObject))
+		{
+			if (JsonObject->HasField(TEXT("name")))
+			{
+				FString Exception = JsonObject->GetStringField(TEXT("name"));
+				if (Exception.Equals(TEXT("CodeMismatchException")))
+				{
+					ConfirmStatusMessageDelegate.Broadcast(TEXT("Incorrect verification code"), true);
+					return;
+				}
+			}
+			ConfirmStatusMessageDelegate.Broadcast(HTTPStatusMessages::SomethingWentWrong, true);
+			return;
+		}
+	}
+	OnConfirmSucceeded.Broadcast();
+}
+
+void UPortalManager::QuitGame()
+{
+	APlayerController* LocalPlayerController = GEngine->GetFirstLocalPlayerController(GetWorld());
+	if (IsValid(LocalPlayerController))
+	{
+		UKismetSystemLibrary::QuitGame(this, LocalPlayerController, EQuitPreference::Quit, false);
+	}
+}
+
+void UPortalManager::RefreshTokens(const FString& RefreshToken)
+{
+	check(APIData);
+	TSharedRef<IHttpRequest> Request = FHttpModule::Get().CreateRequest();
+	Request->OnProcessRequestComplete().BindUObject(this, &UPortalManager::RefreshTokens_Response);
+	const FString APIUrl = APIData->GetAPIEndpoint(DedicatedServerTags::PortalAPI::SignIn);
+	Request->SetURL(APIUrl);
+	Request->SetVerb(TEXT("POST"));
+	Request->SetHeader(TEXT("Content-Type"), TEXT("application/json"));
+	
+	TMap<FString, FString> Params = {
+		{ TEXT("refreshToken"), RefreshToken }
+	};
+	const FString Content = SerializeJsonContent(Params);
+	Request->SetContentAsString(Content);
+	Request->ProcessRequest();
+}
+
+void UPortalManager::RefreshTokens_Response(FHttpRequestPtr Request, FHttpResponsePtr Response, bool bWasSuccessful)
+{
+	if (!bWasSuccessful) return;
+
+	TSharedPtr<FJsonObject> JsonObject;
+	TSharedRef<TJsonReader<>> JsonReader = TJsonReaderFactory<>::Create(Response->GetContentAsString());
+	if (FJsonSerializer::Deserialize(JsonReader, JsonObject))
+	{
+		if (ContainsErrors(JsonObject)) return;
+
+		FDSInitiateAuthResponse InitiateAuthResponse;
+		FJsonObjectConverter::JsonObjectToUStruct(JsonObject.ToSharedRef(), &InitiateAuthResponse);
+
+		UDSLocalPlayerSubsystem* LocalPlayerSubsystem = GetDSLocalPlayerSubsystem();
+		if (IsValid(LocalPlayerSubsystem))
+		{
+			LocalPlayerSubsystem->UpdateTokens(
+				InitiateAuthResponse.AuthenticationResult.AccessToken,
+				InitiateAuthResponse.AuthenticationResult.IdToken
+				);
+		}
+	}
+}
+
+void UPortalManager::SignOut(const FString& AccessToken)
+{
+	check(APIData);
+	TSharedRef<IHttpRequest> Request = FHttpModule::Get().CreateRequest();
+	Request->OnProcessRequestComplete().BindUObject(this, &UPortalManager::SignOut_Response);
+	const FString APIUrl = APIData->GetAPIEndpoint(DedicatedServerTags::PortalAPI::SignOut);
+	Request->SetURL(APIUrl);
+	Request->SetVerb(TEXT("POST"));
+	Request->SetHeader(TEXT("Content-Type"), TEXT("application/json"));
+	
+	TMap<FString, FString> Params = {
+		{ TEXT("accessToken"), AccessToken }
+	};
+	const FString Content = SerializeJsonContent(Params);
+	Request->SetContentAsString(Content);
+	Request->ProcessRequest();
+}
+
+void UPortalManager::SignOut_Response(FHttpRequestPtr Request, FHttpResponsePtr Response, bool bWasSuccessful)
+{
+	if (!bWasSuccessful)
+	{
+		return;
+	}
+
+	TSharedPtr<FJsonObject> JsonObject;
+	TSharedRef<TJsonReader<>> JsonReader = TJsonReaderFactory<>::Create(Response->GetContentAsString());
+	if (FJsonSerializer::Deserialize(JsonReader, JsonObject))
+	{
+		if (ContainsErrors(JsonObject))
+		{
+			return;
+		}
+	}
+	if (UDSLocalPlayerSubsystem* LocalPlayerSubsystem = GetDSLocalPlayerSubsystem(); IsValid(LocalPlayerSubsystem))
+	{
+		LocalPlayerSubsystem->Username = "";
+		LocalPlayerSubsystem->Password = "";
+		LocalPlayerSubsystem->Email = "";
+	}
+	APlayerController* LocalPlayerController = GEngine->GetFirstLocalPlayerController(GetWorld());
+	if (IsValid(LocalPlayerController))
+	{
+		if (IHUDManagment* HUDManagementInterface = Cast<IHUDManagment>(LocalPlayerController->GetHUD()))
+		{
+			HUDManagementInterface->OnSignOut();
+		}
+	}
+}

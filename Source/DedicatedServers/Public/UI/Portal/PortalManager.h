@@ -4,32 +4,56 @@
 
 #include "CoreMinimal.h"
 #include "Interfaces/IHttpRequest.h"
+#include "UI/Interfaces/PortalManagement.h"
 #include "UI/HTTP/HTTPRequestManager.h"
+#include "UI/HTTP/HTTPRequestTypes.h"
 #include "PortalManager.generated.h"
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FBroadcastJoninGameSessionMessage,const FString&, StatusMessage, bool, bShouldResetJoinGameButton);
+
 /**
  * 
  */
 UCLASS()
-class DEDICATEDSERVERS_API UPortalManager : public UHTTPRequestManager
+class DEDICATEDSERVERS_API UPortalManager : public UHTTPRequestManager, public IPortalManagement 
 {
 	GENERATED_BODY()
 
 public:
-	UPROPERTY(BlueprintAssignable)
-	FBroadcastJoninGameSessionMessage BroadcastJoinGameSessionMessage;
-	
 
-	void JoinGameSession();
+	
+	UPROPERTY(BlueprintAssignable)
+	FAPIStatusMessage SignUpStatusMessageDelegate;
+
+	UPROPERTY(BlueprintAssignable)
+	FAPIStatusMessage ConfirmStatusMessageDelegate;
+
+	UPROPERTY(BlueprintAssignable)
+	FAPIStatusMessage SignInStatusMessageDelegate;
+
+	UPROPERTY(BlueprintAssignable)
+	FOnAPIRequestSucceeded OnSignUpSucceeded;
+
+	UPROPERTY(BlueprintAssignable)
+	FOnAPIRequestSucceeded OnConfirmSucceeded;
+	void SignIn(const FString& Username, const FString& Password);
+	void SignUp(const FString& Username, const FString& Password, const FString& Email);
+	void Confirm(const FString& ConfirmationCode);
+	virtual void RefreshTokens(const FString& RefreshToken);
+	void SignOut(const FString& AccessToken);
+	
+	UFUNCTION()
+	void QuitGame();
+
+	FDSSignUpResponse LastSignUpResponse;
+	FString LastUsername;
 
 private:
-	void FindOrCreateGameSession_Response(FHttpRequestPtr Request, FHttpResponsePtr Response, bool bWasSuccessful);
-	void CreatePlayerSession_Response(FHttpRequestPtr Request, FHttpResponsePtr Response, bool bWasSuccessful);
-	FString GetUniquePlayerId() const;
-	void HandleGameSessionStatus(const FString& Status, const FString& SessionId);
-	void TryCreatePlayerSession(const FString& PlayerId, const FString& GameSessionId);
-	FTimerHandle CreateSessionTimer;
+	void SignIn_Response(FHttpRequestPtr Request, FHttpResponsePtr Response, bool bWasSuccessful);
+	void SignUp_Response(FHttpRequestPtr Request, FHttpResponsePtr Response, bool bWasSuccessful);
+	void Confirm_Response(FHttpRequestPtr Request, FHttpResponsePtr Response, bool bWasSuccessful);
+	void RefreshTokens_Response(FHttpRequestPtr Request, FHttpResponsePtr Response, bool bWasSuccessful);
+	void SignOut_Response(FHttpRequestPtr Request, FHttpResponsePtr Response, bool bWasSuccessful);
 };
-	
+
+
 

@@ -6,6 +6,7 @@
 #include "Blueprint/UserWidget.h"
 #include "SignUpPage.generated.h"
 
+class UCheckBox;
 class UButton;
 class UEditableTextBox;
 class UTextBlock;
@@ -39,6 +40,31 @@ public:
 
 	UPROPERTY(meta = (BindWidget))
 	TObjectPtr<UTextBlock> TextBlock_StatusMessage;
+
+	UPROPERTY(meta = (BindWidget))
+	TObjectPtr<UCheckBox> CheckBox_ShowPasswords;
+	
+	UFUNCTION()
+	void UpdateStatusMessage(const FString& Message, bool bShouldResetWidgets);
+
+	
+	void ClearTextBoxes();
+protected:
+	virtual void NativeConstruct() override;
+private:
+	UFUNCTION()
+	void UpdateSignUpButtonState(const FText& Text);
+	
+	bool IsValidEmail(const FString& Email);
+	
+	bool IsStrongPassword(const FString& Password, FString& StatusMessage);
+
+	UFUNCTION()
+	void ShowPassword(bool bIsChecked);
 	
 	
 };
+
+
+
+
