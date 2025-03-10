@@ -88,7 +88,6 @@ void USignInOverlay::OnSignUpSucceeded()
 	SignUpPage->ClearTextBoxes();
 	ConfirmSignUpPage->TextBlock_Destination->SetText(FText::FromString(PortalManager->LastSignUpResponse.CodeDeliveryDetails.Destination));
 	ShowConfirmSignUpPage();
-
 }
 
 void USignInOverlay::OnConfirmSucceeded()

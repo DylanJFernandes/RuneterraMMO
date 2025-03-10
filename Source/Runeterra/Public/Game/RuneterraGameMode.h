@@ -3,17 +3,14 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Game/DS_GameMode.h"
+#include "Game/DS_HostGameMode.h"
 #include "RuneterraGameMode.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class RUNETERRA_API ARuneterraGameMode : public ADS_GameMode
+class RUNETERRA_API ARuneterraGameMode : public ADS_HostGameMode
 {
 	GENERATED_BODY()
-	
-protected:
-	virtual void BeginPlay() override;
 };

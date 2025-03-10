@@ -25,4 +25,6 @@ protected:
 	virtual void UpdateCountdownTimer(const FCountdownTimerHandle& CountdownTimerHandle);
 	virtual void OnCountdownTimerFinished(ECountdownTimerType Type);
 	void TrySeamlessTravel(const TSoftObjectPtr<UWorld>& DestinationMap) const;
+	void RemovePlayerSession(AController* Exiting);
+	virtual void Logout(AController* Exiting) override;
 };

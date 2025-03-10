@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Interfaces/IHttpRequest.h"
-#include "UI/Interfaces/PortalManagement.h"
+#include "UI/Portal/Interfaces/PortalManagement.h"
 #include "UI/HTTP/HTTPRequestManager.h"
 #include "UI/HTTP/HTTPRequestTypes.h"
 #include "PortalManager.generated.h"

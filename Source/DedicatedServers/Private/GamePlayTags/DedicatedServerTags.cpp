@@ -17,5 +17,11 @@ namespace DedicatedServerTags
 		UE_DEFINE_GAMEPLAY_TAG_COMMENT(SignIn,"DedicatedServerTags.PortalAPI.SignIn", "Retrieves access token,Id Token, and refresh Token in Portal API")
 		UE_DEFINE_GAMEPLAY_TAG_COMMENT(SignOut,"DedicatedServerTags.PortalAPI.SignOut", "Global Sign out and invalidates the tokens of Portal API")
 	}
+	
+	namespace PlayerStatsAPI
+	{
+		UE_DEFINE_GAMEPLAY_TAG_COMMENT(RecordPlayerStats,"DedicatedServerTags.PlayerStatsAPI.RecordPlayerStats", "Records player stats in the PlayStatsAPI for the Dynamo Database")
+		UE_DEFINE_GAMEPLAY_TAG_COMMENT(RetrievePlayerStats,"DedicatedServerTags.PlayerStatsAPI.RetrievePlayerStats", "Retrieves the players stats in the PlayStatsAPI from the Dynamo Database")
+	}
 }
 

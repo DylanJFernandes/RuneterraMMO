@@ -1,4 +1,5 @@
 ﻿#pragma once
+#include "DedicatedServers/Public/Character/CharacterStats.h"
 
 #include "HTTPRequestTypes.generated.h"
 
@@ -260,4 +261,42 @@ struct FDSInitiateAuthResponse
 	FString email{};
 
 	void Dump() const;
+};
+
+USTRUCT()
+struct FDSPlayerStatsInput
+{
+	GENERATED_BODY()
+
+	UPROPERTY()
+	FPlayerStats playerStats{};
+
+	UPROPERTY()
+	FString username{};
+
+	// Format: slot#_CharacterStats
+	UPROPERTY()
+	FString preferredSlotToSave{};
+};
+
+USTRUCT()
+struct FDSPlayerStatsResponse
+{
+	GENERATED_BODY()
+
+	UPROPERTY()
+	int32 currentSelectedCharacterIndex{};
+	
+	UPROPERTY()
+	FCharacterStats slotOne_CharacterStats{};
+
+	UPROPERTY()
+	FCharacterStats slotTwo_CharacterStats{};
+
+	UPROPERTY()
+	FCharacterStats slotThree_CharacterStats{};
+	
+	UPROPERTY()
+	FCharacterStats slotFour_CharacterStats{};
+	
 };

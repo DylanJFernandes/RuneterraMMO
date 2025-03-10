@@ -3,6 +3,9 @@
 ADSPlayerController::ADSPlayerController()
 {
 	SingleTripTime = 0.f;
+
+	Username = "";
+	PlayerSessionId = "";
 }
 
 void ADSPlayerController::ReceivedPlayer()

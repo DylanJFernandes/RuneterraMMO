@@ -3,8 +3,10 @@
 
 #include "Game/DS_GameModeBase.h"
 
+#include "aws/gamelift/server/GameLiftServerAPI.h"
 #include "Kismet/GameplayStatics.h"
 #include "Player/DSPlayerController.h"
+#include "Player/DS_PlayerState.h"
 
 ADS_GameModeBase::ADS_GameModeBase()
 {
@@ -15,7 +17,6 @@ void ADS_GameModeBase::StartCountdownTimer(FCountdownTimerHandle& CountdownTimer
 {
 	CountdownTimerHandle.TimerFinishedDelegate.BindWeakLambda(this, [&]()
 	{
-		StopCountdownTimer(CountdownTimerHandle);
 		OnCountdownTimerFinished(CountdownTimerHandle.Type);
 	});
 
@@ -94,4 +95,33 @@ void ADS_GameModeBase::TrySeamlessTravel(const TSoftObjectPtr<UWorld>& Destinati
 	{
 		GetWorld()->ServerTravel(MapName);
 	}
+}
+
+void ADS_GameModeBase::RemovePlayerSession(AController* Exiting)
+{
+	ADSPlayerController* DSPlayerController = Cast<ADSPlayerController>(Exiting);
+	if (!IsValid(DSPlayerController)) return;
+#if WITH_GAMELIFT
+
+	const FString& PlayerSessionId = DSPlayerController->PlayerSessionId;
+	if (!PlayerSessionId.IsEmpty())
+	{
+		Aws::GameLift::Server::RemovePlayerSession(TCHAR_TO_ANSI(*PlayerSessionId));
+	}
+#endif
+}
+
+void ADS_GameModeBase::Logout(AController* Exiting)
+{
+	Super::Logout(Exiting);
+	
+	if (ADSPlayerController* DSPlayerController = Cast<ADSPlayerController>(Exiting); IsValid(DSPlayerController))
+	{
+		ADS_PlayerState* Client_PlayerState = Exiting->GetPlayerState<ADS_PlayerState>();
+		if (IsValid(Client_PlayerState))
+		{
+			Client_PlayerState->OnLogout(DSPlayerController->Username);
+		}
+	}
+	RemovePlayerSession(Exiting);
 }

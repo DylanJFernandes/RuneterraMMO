@@ -18,4 +18,10 @@ namespace DedicatedServerTags
 		UE_DECLARE_GAMEPLAY_TAG_EXTERN(SignIn);
 		UE_DECLARE_GAMEPLAY_TAG_EXTERN(SignOut);
 	}
+	
+	namespace PlayerStatsAPI
+	{
+		UE_DECLARE_GAMEPLAY_TAG_EXTERN(RecordPlayerStats);
+		UE_DECLARE_GAMEPLAY_TAG_EXTERN(RetrievePlayerStats);
+    }
 }

@@ -3,10 +3,11 @@
 
 #include "Player/DSLocalPlayerSubsystem.h"
 
-#include "UI/Interfaces/PortalManagement.h"
+#include "UI/Portal/Interfaces/PortalManagement.h"
 
 void UDSLocalPlayerSubsystem::InitializeTokens(const FDSAuthenticationResult& AuthResult,TScriptInterface<IPortalManagement> PortalManagement)
 {
+	UE_LOG(LogTemp,Log,TEXT("Tokens Intialized For the First TIME!"));
 	AuthenticationResult = AuthResult;
 	PortalManagementInterface = PortalManagement;
 	SetRefreshTokenTimer();
@@ -26,6 +27,7 @@ void UDSLocalPlayerSubsystem::SetRefreshTokenTimer()
 
 void UDSLocalPlayerSubsystem::UpdateTokens(const FString& AccessToken, const FString& IdToken)
 {
+	UE_LOG(LogTemp,Log,TEXT("Tokens Refresheeeeed!"));
 	AuthenticationResult.AccessToken = AccessToken;
 	AuthenticationResult.IdToken = IdToken;
 	AuthenticationResult.Dump();

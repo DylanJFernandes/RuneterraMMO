@@ -1,0 +1,24 @@
+{
+	"Targets": [
+		{
+			"Name": "Runeterra",
+			"Path": "..\\Source\\Runeterra.Target.cs",
+			"Type": "Game"
+		},
+		{
+			"Name": "RuneterraClient",
+			"Path": "..\\Source\\RuneterraClient.Target.cs",
+			"Type": "Client"
+		},
+		{
+			"Name": "RuneterraEditor",
+			"Path": "..\\Source\\RuneterraEditor.Target.cs",
+			"Type": "Editor"
+		},
+		{
+			"Name": "RuneterraServer",
+			"Path": "..\\Source\\RuneterraServer.Target.cs",
+			"Type": "Server"
+		}
+	]
+}

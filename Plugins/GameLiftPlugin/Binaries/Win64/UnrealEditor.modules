@@ -1,0 +1,10 @@
+{
+	"BuildId": "09902b53-e91b-44f3-a370-2de2c593c02e",
+	"Modules": 
+	{
+		"GameLiftClientSDK": "UnrealEditor-GameLiftClientSDK.dll",
+		"GameLiftCore": "UnrealEditor-GameLiftCore.dll",
+		"GameLiftPlugin": "UnrealEditor-GameLiftPlugin.dll",
+		"GameLiftServerSDK": "UnrealEditor-GameLiftServerSDK.dll"
+	}
+}

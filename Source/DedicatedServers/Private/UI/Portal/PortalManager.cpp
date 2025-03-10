@@ -10,8 +10,9 @@
 #include "Interfaces/IHttpResponse.h"
 #include "Kismet/GameplayStatics.h"
 #include "Player/DSLocalPlayerSubsystem.h"
-#include "UI/Interfaces/HUDManagment.h"
+#include "UI/Portal/Interfaces/SignOutManagement.h"
 #include "GameFramework/HUD.h"
+#include "UI/Portal/Interfaces/SignInManagement.h"
 
 void UPortalManager::SignIn(const FString& Username, const FString& Password)
 {
@@ -66,9 +67,9 @@ void UPortalManager::SignIn_Response(FHttpRequestPtr Request, FHttpResponsePtr R
 		APlayerController* LocalPlayerController = GEngine->GetFirstLocalPlayerController(GetWorld());
 		if (IsValid(LocalPlayerController))
 		{
-			if (IHUDManagment* HUDManagementInterface = Cast<IHUDManagment>(LocalPlayerController->GetHUD()))
+			if (ISignInManagement* SignInManagementInterface = Cast<ISignInManagement>(LocalPlayerController->GetHUD()))
 			{
-				HUDManagementInterface->OnSignIn();
+				SignInManagementInterface->OnSignIn();
 			}
 		}
 	}
@@ -98,11 +99,6 @@ void UPortalManager::SignUp(const FString& Username, const FString& Password, co
 
 void UPortalManager::SignUp_Response(FHttpRequestPtr Request, FHttpResponsePtr Response, bool bWasSuccessful)
 {
-	if (!bWasSuccessful)
-	{
-		SignUpStatusMessageDelegate.Broadcast(HTTPStatusMessages::SomethingWentWrong, true);
-	}
-
 	TSharedPtr<FJsonObject> JsonObject;
 	TSharedRef<TJsonReader<>> JsonReader = TJsonReaderFactory<>::Create(Response->GetContentAsString());
 	if (FJsonSerializer::Deserialize(JsonReader, JsonObject))
@@ -114,8 +110,13 @@ void UPortalManager::SignUp_Response(FHttpRequestPtr Request, FHttpResponsePtr R
 		}
 		
 		FJsonObjectConverter::JsonObjectToUStruct(JsonObject.ToSharedRef(), &LastSignUpResponse);
-		OnSignUpSucceeded.Broadcast();
 	}
+	if (!bWasSuccessful)
+	{
+		SignUpStatusMessageDelegate.Broadcast(HTTPStatusMessages::SomethingWentWrong, true);
+	}
+
+	OnSignUpSucceeded.Broadcast();
 }
 
 void UPortalManager::Confirm(const FString& ConfirmationCode)
@@ -202,6 +203,7 @@ void UPortalManager::RefreshTokens_Response(FHttpRequestPtr Request, FHttpRespon
 	TSharedRef<TJsonReader<>> JsonReader = TJsonReaderFactory<>::Create(Response->GetContentAsString());
 	if (FJsonSerializer::Deserialize(JsonReader, JsonObject))
 	{
+		// TODO: Save here and quit/destroy char (for alt4 case)
 		if (ContainsErrors(JsonObject)) return;
 
 		FDSInitiateAuthResponse InitiateAuthResponse;
@@ -261,9 +263,9 @@ void UPortalManager::SignOut_Response(FHttpRequestPtr Request, FHttpResponsePtr 
 	APlayerController* LocalPlayerController = GEngine->GetFirstLocalPlayerController(GetWorld());
 	if (IsValid(LocalPlayerController))
 	{
-		if (IHUDManagment* HUDManagementInterface = Cast<IHUDManagment>(LocalPlayerController->GetHUD()))
+		if (ISignOutManagement* SignOutManagement = Cast<ISignOutManagement>(LocalPlayerController->GetHUD()))
 		{
-			HUDManagementInterface->OnSignOut();
+			SignOutManagement->OnSignOut();
 		}
 	}
 }
