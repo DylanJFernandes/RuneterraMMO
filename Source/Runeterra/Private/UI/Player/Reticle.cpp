@@ -3,7 +3,7 @@
 
 #include "UI/Player/Reticle.h"
 
-#include "Characters/BaseCharacter.h"
+#include "Characters/PlayerCharacter.h"
 #include "Components/Image.h"
 #include "Components/Combat/CombatComponent.h"
 #include "Weapon/Weapon.h"
@@ -24,14 +24,14 @@ void UReticle::NativeConstruct()
 
 	GetOwningPlayer()->OnPossessedPawnChanged.AddDynamic(this, &UReticle::OnPossessedPawnChanged);
 	
-	ABaseCharacter* BaseCharacter = Cast<ABaseCharacter>(GetOwningPlayer()->GetPawn());
-	if (!IsValid(BaseCharacter)) return;
+	APlayerCharacter* PlayerCharacter = Cast<APlayerCharacter>(GetOwningPlayer()->GetPawn());
+	if (!IsValid(PlayerCharacter)) return;
 	
-	OnPossessedPawnChanged(nullptr, BaseCharacter);
+	OnPossessedPawnChanged(nullptr, PlayerCharacter);
 	
-	if (BaseCharacter->bWeaponFirstReplicated)
+	if (PlayerCharacter->bWeaponFirstReplicated)
 	{
-		AWeapon* CurrentWeapon = IPlayerInterface::Execute_GetCurrentWeapon(BaseCharacter);
+		AWeapon* CurrentWeapon = IPlayerInterface::Execute_GetCurrentWeapon(PlayerCharacter);
 		if (IsValid(CurrentWeapon))
 		{
 			OnReticleChange(CurrentWeapon->GetReticleDynamicMaterialInstance(), CurrentWeapon->ReticleParams);
@@ -39,7 +39,7 @@ void UReticle::NativeConstruct()
 	}
 	else
 	{
-		BaseCharacter->OnWeaponFirstReplicated.AddDynamic(this, &UReticle::OnWeaponFirstReplicated);
+		PlayerCharacter->OnWeaponFirstReplicated.AddDynamic(this, &UReticle::OnWeaponFirstReplicated);
 	}
 }
 

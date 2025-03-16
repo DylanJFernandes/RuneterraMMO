@@ -3,6 +3,16 @@
 
 #include "Player/RuneterraPlayerState.h"
 
+#include "AbilitySystem/RuneterraAbilitySystemComponent.h"
+
+ARuneterraPlayerState::ARuneterraPlayerState()
+{
+	SetNetUpdateFrequency( 100.f);
+	AbilitySystemComponent = CreateDefaultSubobject<URuneterraAbilitySystemComponent>("AbilitySystemComponent");
+	AbilitySystemComponent->SetReplicationMode(EGameplayEffectReplicationMode::Mixed);
+	
+}
+
 void ARuneterraPlayerState::BeginPlay()
 {
 	Super::BeginPlay();
@@ -12,6 +22,11 @@ void ARuneterraPlayerState::OnLogout(const FString& Username)
 {
 	SavePlayerStats(Username);
 }
+UAbilitySystemComponent* ARuneterraPlayerState::GetAbilitySystemComponent() const
+{
+	return AbilitySystemComponent;
+}
+
 
 void ARuneterraPlayerState::OnRetrievePlayerStats(const FDSPlayerStatsResponse& RetrievePlayerStatsResponse)
 {
@@ -36,3 +51,4 @@ void ARuneterraPlayerState::SavePlayerStats(const FString& Username)
 	// Save PlayerStats to DB
 	RecordPlayerStats(PlayerStatsInput);
 }
+
