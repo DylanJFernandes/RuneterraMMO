@@ -47,6 +47,7 @@ void UGameSessionsManager::FindOrCreateGameSession_Response(FHttpRequestPtr Requ
 		if (ContainsErrors(JsonObject))
 		{
 			BroadcastJoinGameSessionMessage.Broadcast(HTTPStatusMessages::SomethingWentWrong, true);
+			
 		}
 
 		FDSGameSession GameSession;

@@ -22,7 +22,8 @@
     <None Include="..\..\.vsconfig" />
     <None Include="..\..\install.bat" />
     <None Include="..\..\README.md" />
-    <None Include="..\..\Runeterra.uproject.DotSettings.user" />
+    <None Include="..\..\Runeterra.png" />
+    <None Include="..\..\Runeterra.uproject.DotSettings" />
     <Filter Include="Config">
       <UniqueIdentifier>{FA535FFB-25E1-3D20-B416-52F9BE21E06E}</UniqueIdentifier>
     </Filter>
@@ -11738,7 +11739,19 @@
     <Filter Include="Source\DedicatedServers\Private\Game">
       <UniqueIdentifier>{3C3FD19A-54C1-3447-A5F9-313F95DF1376}</UniqueIdentifier>
     </Filter>
+    <ClCompile Include="..\..\Source\DedicatedServers\Private\Game\DS_GameInstanceSubsystem.cpp">
+      <Filter>Source\DedicatedServers\Private\Game</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\DedicatedServers\Private\Game\DS_GameMode.cpp">
+      <Filter>Source\DedicatedServers\Private\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\DedicatedServers\Private\Game\DS_GameModeBase.cpp">
+      <Filter>Source\DedicatedServers\Private\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\DedicatedServers\Private\Game\DS_GameState.cpp">
+      <Filter>Source\DedicatedServers\Private\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\DedicatedServers\Private\Game\DS_HostGameMode.cpp">
       <Filter>Source\DedicatedServers\Private\Game</Filter>
     </ClCompile>
     <Filter Include="Source\DedicatedServers\Private\GamePlayTags">
@@ -11752,6 +11765,24 @@
     </Filter>
     <ClCompile Include="..\..\Source\DedicatedServers\Private\Player\DSLocalPlayerSubsystem.cpp">
       <Filter>Source\DedicatedServers\Private\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\DedicatedServers\Private\Player\DSPlayerController.cpp">
+      <Filter>Source\DedicatedServers\Private\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\DedicatedServers\Private\Player\DS_PlayerState.cpp">
+      <Filter>Source\DedicatedServers\Private\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\DedicatedServers\Private\Player\PlayerInfo.cpp">
+      <Filter>Source\DedicatedServers\Private\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\DedicatedServers\Private\Player\PlayerInfoState.cpp">
+      <Filter>Source\DedicatedServers\Private\Player</Filter>
+    </ClCompile>
+    <Filter Include="Source\DedicatedServers\Private\Types">
+      <UniqueIdentifier>{406D1829-9CEA-3AC4-9202-E2B4C116ADED}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\DedicatedServers\Private\Types\DSTypes.cpp">
+      <Filter>Source\DedicatedServers\Private\Types</Filter>
     </ClCompile>
     <Filter Include="Source\DedicatedServers\Private\UI">
       <UniqueIdentifier>{0A02996A-5D19-390F-8ACF-6CEEECE882B3}</UniqueIdentifier>
@@ -11801,10 +11832,22 @@
     <ClCompile Include="..\..\Source\DedicatedServers\Private\UI\HTTP\HTTPRequestTypes.cpp">
       <Filter>Source\DedicatedServers\Private\UI\HTTP</Filter>
     </ClCompile>
+    <Filter Include="Source\DedicatedServers\Private\UI\Lobby">
+      <UniqueIdentifier>{1C5C9763-2AE9-344E-A101-2D4CD81D76B4}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\DedicatedServers\Private\UI\Lobby\LobbyHUD.cpp">
+      <Filter>Source\DedicatedServers\Private\UI\Lobby</Filter>
+    </ClCompile>
+    <Filter Include="Source\DedicatedServers\Private\UI\PlayerStats">
+      <UniqueIdentifier>{22487649-416A-3338-BDCB-295E2988B1C1}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\DedicatedServers\Private\UI\PlayerStats\PlayerStatsManager.cpp">
+      <Filter>Source\DedicatedServers\Private\UI\PlayerStats</Filter>
+    </ClCompile>
     <Filter Include="Source\DedicatedServers\Private\UI\Portal">
       <UniqueIdentifier>{AA092DFA-8548-3496-93D3-BA3ECD2C89F4}</UniqueIdentifier>
     </Filter>
-    <ClCompile Include="..\..\Source\DedicatedServers\Private\UI\Portal\PortalHUD.cpp">
+    <ClCompile Include="..\..\Source\DedicatedServers\Private\UI\Portal\LoginHUD.cpp">
       <Filter>Source\DedicatedServers\Private\UI\Portal</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\DedicatedServers\Private\UI\Portal\PortalManager.cpp">
@@ -11837,10 +11880,13 @@
     <Filter Include="Source\DedicatedServers\Private\UI\Portal\Interfaces">
       <UniqueIdentifier>{54948A71-AD18-3DF5-837A-04E830DDD675}</UniqueIdentifier>
     </Filter>
-    <ClCompile Include="..\..\Source\DedicatedServers\Private\UI\Portal\Interfaces\HUDManagment.cpp">
+    <ClCompile Include="..\..\Source\DedicatedServers\Private\UI\Portal\Interfaces\PortalManagement.cpp">
       <Filter>Source\DedicatedServers\Private\UI\Portal\Interfaces</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\DedicatedServers\Private\UI\Portal\Interfaces\PortalManagement.cpp">
+    <ClCompile Include="..\..\Source\DedicatedServers\Private\UI\Portal\Interfaces\SignInManagement.cpp">
+      <Filter>Source\DedicatedServers\Private\UI\Portal\Interfaces</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\DedicatedServers\Private\UI\Portal\Interfaces\SignOutManagement.cpp">
       <Filter>Source\DedicatedServers\Private\UI\Portal\Interfaces</Filter>
     </ClCompile>
     <Filter Include="Source\DedicatedServers\Private\UI\Portal\SignIn">
@@ -11864,9 +11910,21 @@
     <ClCompile Include="..\..\Source\DedicatedServers\Private\UI\Portal\SignIn\SuccessConfirmedPage.cpp">
       <Filter>Source\DedicatedServers\Private\UI\Portal\SignIn</Filter>
     </ClCompile>
+    <Filter Include="Source\DedicatedServers\Private\UI\Timers">
+      <UniqueIdentifier>{DF91DD0F-A1C4-30EB-9AE8-A42BF8369FAA}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\DedicatedServers\Private\UI\Timers\TimerWidget.cpp">
+      <Filter>Source\DedicatedServers\Private\UI\Timers</Filter>
+    </ClCompile>
     <Filter Include="Source\DedicatedServers\Public">
       <UniqueIdentifier>{70189E23-DF24-3257-AB89-20E57454C40F}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\DedicatedServers\Public\Character">
+      <UniqueIdentifier>{51E5DD0E-0CCB-33FE-9B8F-9E67AFBB18E2}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\DedicatedServers\Public\Character\CharacterStats.h">
+      <Filter>Source\DedicatedServers\Public\Character</Filter>
+    </ClCompile>
     <Filter Include="Source\DedicatedServers\Public\Data">
       <UniqueIdentifier>{F3CAFF7A-E0BE-303E-BF87-AA6255343893}</UniqueIdentifier>
     </Filter>
@@ -11879,7 +11937,19 @@
     <Filter Include="Source\DedicatedServers\Public\Game">
       <UniqueIdentifier>{F6001977-9A7C-38B4-A57C-225E8D1CEF43}</UniqueIdentifier>
     </Filter>
+    <ClCompile Include="..\..\Source\DedicatedServers\Public\Game\DS_GameInstanceSubsystem.h">
+      <Filter>Source\DedicatedServers\Public\Game</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\DedicatedServers\Public\Game\DS_GameMode.h">
+      <Filter>Source\DedicatedServers\Public\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\DedicatedServers\Public\Game\DS_GameModeBase.h">
+      <Filter>Source\DedicatedServers\Public\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\DedicatedServers\Public\Game\DS_GameState.h">
+      <Filter>Source\DedicatedServers\Public\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\DedicatedServers\Public\Game\DS_HostGameMode.h">
       <Filter>Source\DedicatedServers\Public\Game</Filter>
     </ClCompile>
     <Filter Include="Source\DedicatedServers\Public\GamePlayTags">
@@ -11893,6 +11963,24 @@
     </Filter>
     <ClCompile Include="..\..\Source\DedicatedServers\Public\Player\DSLocalPlayerSubsystem.h">
       <Filter>Source\DedicatedServers\Public\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\DedicatedServers\Public\Player\DSPlayerController.h">
+      <Filter>Source\DedicatedServers\Public\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\DedicatedServers\Public\Player\DS_PlayerState.h">
+      <Filter>Source\DedicatedServers\Public\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\DedicatedServers\Public\Player\PlayerInfo.h">
+      <Filter>Source\DedicatedServers\Public\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\DedicatedServers\Public\Player\PlayerInfoState.h">
+      <Filter>Source\DedicatedServers\Public\Player</Filter>
+    </ClCompile>
+    <Filter Include="Source\DedicatedServers\Public\Types">
+      <UniqueIdentifier>{51EF11D3-B19D-3E2B-8613-D73645DE36D7}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\DedicatedServers\Public\Types\DSTypes.h">
+      <Filter>Source\DedicatedServers\Public\Types</Filter>
     </ClCompile>
     <Filter Include="Source\DedicatedServers\Public\UI">
       <UniqueIdentifier>{B024E3B9-330F-33D6-835A-301B1FECA636}</UniqueIdentifier>
@@ -11942,19 +12030,22 @@
     <ClCompile Include="..\..\Source\DedicatedServers\Public\UI\HTTP\HTTPRequestTypes.h">
       <Filter>Source\DedicatedServers\Public\UI\HTTP</Filter>
     </ClCompile>
-    <Filter Include="Source\DedicatedServers\Public\UI\Interfaces">
-      <UniqueIdentifier>{78ED88C9-295F-386C-9CB5-192261AEFEAF}</UniqueIdentifier>
+    <Filter Include="Source\DedicatedServers\Public\UI\Lobby">
+      <UniqueIdentifier>{20EF52C1-BF3B-3B0F-AB0F-879C5621EC35}</UniqueIdentifier>
     </Filter>
-    <ClCompile Include="..\..\Source\DedicatedServers\Public\UI\Interfaces\HUDManagment.h">
-      <Filter>Source\DedicatedServers\Public\UI\Interfaces</Filter>
+    <ClCompile Include="..\..\Source\DedicatedServers\Public\UI\Lobby\LobbyHUD.h">
+      <Filter>Source\DedicatedServers\Public\UI\Lobby</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\DedicatedServers\Public\UI\Interfaces\PortalManagement.h">
-      <Filter>Source\DedicatedServers\Public\UI\Interfaces</Filter>
+    <Filter Include="Source\DedicatedServers\Public\UI\PlayerStats">
+      <UniqueIdentifier>{67ADABC6-BDBF-39A8-B46B-8EF57CD313F4}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\DedicatedServers\Public\UI\PlayerStats\PlayerStatsManager.h">
+      <Filter>Source\DedicatedServers\Public\UI\PlayerStats</Filter>
     </ClCompile>
     <Filter Include="Source\DedicatedServers\Public\UI\Portal">
       <UniqueIdentifier>{05DD9763-61E1-3FE2-9C6F-EA752E83F93F}</UniqueIdentifier>
     </Filter>
-    <ClCompile Include="..\..\Source\DedicatedServers\Public\UI\Portal\PortalHUD.h">
+    <ClCompile Include="..\..\Source\DedicatedServers\Public\UI\Portal\LoginHUD.h">
       <Filter>Source\DedicatedServers\Public\UI\Portal</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\DedicatedServers\Public\UI\Portal\PortalManager.h">
@@ -11984,6 +12075,18 @@
     <ClCompile Include="..\..\Source\DedicatedServers\Public\UI\Portal\Dropdown\Dropdown.h">
       <Filter>Source\DedicatedServers\Public\UI\Portal\Dropdown</Filter>
     </ClCompile>
+    <Filter Include="Source\DedicatedServers\Public\UI\Portal\Interfaces">
+      <UniqueIdentifier>{98DDF3C3-6F2B-36FB-B74A-753A84483600}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\DedicatedServers\Public\UI\Portal\Interfaces\PortalManagement.h">
+      <Filter>Source\DedicatedServers\Public\UI\Portal\Interfaces</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\DedicatedServers\Public\UI\Portal\Interfaces\SignInManagement.h">
+      <Filter>Source\DedicatedServers\Public\UI\Portal\Interfaces</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\DedicatedServers\Public\UI\Portal\Interfaces\SignOutManagement.h">
+      <Filter>Source\DedicatedServers\Public\UI\Portal\Interfaces</Filter>
+    </ClCompile>
     <Filter Include="Source\DedicatedServers\Public\UI\Portal\SignIn">
       <UniqueIdentifier>{6E587D28-93C0-32AD-9DF4-F737885A551E}</UniqueIdentifier>
     </Filter>
@@ -12005,6 +12108,12 @@
     <ClCompile Include="..\..\Source\DedicatedServers\Public\UI\Portal\SignIn\SuccessConfirmedPage.h">
       <Filter>Source\DedicatedServers\Public\UI\Portal\SignIn</Filter>
     </ClCompile>
+    <Filter Include="Source\DedicatedServers\Public\UI\Timers">
+      <UniqueIdentifier>{BD2CCF8F-398D-38BA-942E-A81C7F318A09}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\DedicatedServers\Public\UI\Timers\TimerWidget.h">
+      <Filter>Source\DedicatedServers\Public\UI\Timers</Filter>
+    </ClCompile>
     <Filter Include="Source\Runeterra">
       <UniqueIdentifier>{1E8E073A-1FB7-3364-A9B1-80D8085579B4}</UniqueIdentifier>
     </Filter>
@@ -12020,26 +12129,173 @@
     <Filter Include="Source\Runeterra\Private">
       <UniqueIdentifier>{820CEAED-9AD5-3766-99DB-52E514D20E89}</UniqueIdentifier>
     </Filter>
-    <ClCompile Include="..\..\Source\Runeterra\Private\RuneterraGameMode.cpp">
-      <Filter>Source\Runeterra\Private</Filter>
+    <Filter Include="Source\Runeterra\Private\Characters">
+      <UniqueIdentifier>{CEAEDBE0-A023-3E8C-A4D6-26379A4367F2}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\Runeterra\Private\Characters\BaseCharacter.cpp">
+      <Filter>Source\Runeterra\Private\Characters</Filter>
+    </ClCompile>
+    <Filter Include="Source\Runeterra\Private\Components">
+      <UniqueIdentifier>{3E7CCD7D-0D4A-3BCB-BE09-B47D308413D7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Runeterra\Private\Components\Combat">
+      <UniqueIdentifier>{30853B46-69D5-3320-A2A6-68AE6EDEB57D}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\Runeterra\Private\Components\Combat\CombatComponent.cpp">
+      <Filter>Source\Runeterra\Private\Components\Combat</Filter>
+    </ClCompile>
+    <Filter Include="Source\Runeterra\Private\Components\Health">
+      <UniqueIdentifier>{A7D4A590-5954-34F5-9FA7-834680106EA7}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\Runeterra\Private\Components\Health\HealthComponent.cpp">
+      <Filter>Source\Runeterra\Private\Components\Health</Filter>
+    </ClCompile>
+    <Filter Include="Source\Runeterra\Private\Data">
+      <UniqueIdentifier>{EDA6DF64-ED32-3128-9BA3-0A9044CBD8FE}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\Runeterra\Private\Data\WeaponData.cpp">
+      <Filter>Source\Runeterra\Private\Data</Filter>
     </ClCompile>
     <Filter Include="Source\Runeterra\Private\Game">
       <UniqueIdentifier>{C5F59D3B-CDBA-3338-BADF-05ADBBA53006}</UniqueIdentifier>
     </Filter>
-    <ClCompile Include="..\..\Source\Runeterra\Private\Game\RuneterraMenuGameMode.cpp">
+    <ClCompile Include="..\..\Source\Runeterra\Private\Game\LobbyGameMode.cpp">
       <Filter>Source\Runeterra\Private\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Runeterra\Private\Game\MenuGameMode.cpp">
+      <Filter>Source\Runeterra\Private\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Runeterra\Private\Game\RuneterraGameMode.cpp">
+      <Filter>Source\Runeterra\Private\Game</Filter>
+    </ClCompile>
+    <Filter Include="Source\Runeterra\Private\Interfaces">
+      <UniqueIdentifier>{4F42BCED-0D33-35DB-9417-6F7C4CFCB2EA}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\Runeterra\Private\Interfaces\DamageableInterface.cpp">
+      <Filter>Source\Runeterra\Private\Interfaces</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Runeterra\Private\Interfaces\PlayerInterface.cpp">
+      <Filter>Source\Runeterra\Private\Interfaces</Filter>
+    </ClCompile>
+    <Filter Include="Source\Runeterra\Private\Player">
+      <UniqueIdentifier>{4BD38934-D704-386F-BA3E-B014D8A20C72}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\Runeterra\Private\Player\RuneterraPlayerController.cpp">
+      <Filter>Source\Runeterra\Private\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Runeterra\Private\Player\RuneterraPlayerState.cpp">
+      <Filter>Source\Runeterra\Private\Player</Filter>
+    </ClCompile>
+    <Filter Include="Source\Runeterra\Private\Tags">
+      <UniqueIdentifier>{951366E8-ECEF-3B9A-86CE-31D4B40E4AA6}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\Runeterra\Private\Tags\WeaponTypeTags.cpp">
+      <Filter>Source\Runeterra\Private\Tags</Filter>
+    </ClCompile>
+    <Filter Include="Source\Runeterra\Private\UI">
+      <UniqueIdentifier>{37423149-971B-392F-A6FF-54953B8E28CC}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Runeterra\Private\UI\Player">
+      <UniqueIdentifier>{F6ED28A3-1CDC-300F-9E43-DC430CD3399B}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\Runeterra\Private\UI\Player\PlayerHUD.cpp">
+      <Filter>Source\Runeterra\Private\UI\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Runeterra\Private\UI\Player\Reticle.cpp">
+      <Filter>Source\Runeterra\Private\UI\Player</Filter>
+    </ClCompile>
+    <Filter Include="Source\Runeterra\Private\Weapon">
+      <UniqueIdentifier>{F7FA0707-1DBF-3ECE-BC3E-0618A0E4AC18}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\Runeterra\Private\Weapon\Weapon.cpp">
+      <Filter>Source\Runeterra\Private\Weapon</Filter>
     </ClCompile>
     <Filter Include="Source\Runeterra\Public">
       <UniqueIdentifier>{ABD3DB95-E1D3-31C4-AFDD-5B3E7230DA5E}</UniqueIdentifier>
     </Filter>
-    <ClCompile Include="..\..\Source\Runeterra\Public\RuneterraGameMode.h">
-      <Filter>Source\Runeterra\Public</Filter>
+    <Filter Include="Source\Runeterra\Public\Characters">
+      <UniqueIdentifier>{1CD1606B-7EA5-3CE3-92CF-6E5D0EDBA79B}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\Runeterra\Public\Characters\BaseCharacter.h">
+      <Filter>Source\Runeterra\Public\Characters</Filter>
+    </ClCompile>
+    <Filter Include="Source\Runeterra\Public\Components">
+      <UniqueIdentifier>{2936CDE0-FF90-3965-8FDC-6369C8BE44AB}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Runeterra\Public\Components\Combat">
+      <UniqueIdentifier>{5E3485D2-9C9D-3EE6-8B32-36D414F57CD4}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\Runeterra\Public\Components\Combat\CombatComponent.h">
+      <Filter>Source\Runeterra\Public\Components\Combat</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Runeterra\Public\Components\Combat\CombatDataTypes.h">
+      <Filter>Source\Runeterra\Public\Components\Combat</Filter>
+    </ClCompile>
+    <Filter Include="Source\Runeterra\Public\Components\Health">
+      <UniqueIdentifier>{449AB601-4C21-3372-865C-2DFA4C98FFA4}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\Runeterra\Public\Components\Health\HealthComponent.h">
+      <Filter>Source\Runeterra\Public\Components\Health</Filter>
+    </ClCompile>
+    <Filter Include="Source\Runeterra\Public\Data">
+      <UniqueIdentifier>{9BAF9464-31B8-3680-A1E5-90660D131F7D}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\Runeterra\Public\Data\WeaponData.h">
+      <Filter>Source\Runeterra\Public\Data</Filter>
     </ClCompile>
     <Filter Include="Source\Runeterra\Public\Game">
       <UniqueIdentifier>{9D20DCC7-6826-3C06-ACB7-167B81AC4F08}</UniqueIdentifier>
     </Filter>
-    <ClCompile Include="..\..\Source\Runeterra\Public\Game\RuneterraMenuGameMode.h">
+    <ClCompile Include="..\..\Source\Runeterra\Public\Game\LobbyGameMode.h">
       <Filter>Source\Runeterra\Public\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Runeterra\Public\Game\MenuGameMode.h">
+      <Filter>Source\Runeterra\Public\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Runeterra\Public\Game\RuneterraGameMode.h">
+      <Filter>Source\Runeterra\Public\Game</Filter>
+    </ClCompile>
+    <Filter Include="Source\Runeterra\Public\Interfaces">
+      <UniqueIdentifier>{E58ACF18-8354-3F25-AFBB-70EC6DC2AF64}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\Runeterra\Public\Interfaces\DamageableInterface.h">
+      <Filter>Source\Runeterra\Public\Interfaces</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Runeterra\Public\Interfaces\PlayerInterface.h">
+      <Filter>Source\Runeterra\Public\Interfaces</Filter>
+    </ClCompile>
+    <Filter Include="Source\Runeterra\Public\Player">
+      <UniqueIdentifier>{81E64DBE-CE54-3281-87E9-6F6DDF7EDDD8}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\Runeterra\Public\Player\RuneterraPlayerController.h">
+      <Filter>Source\Runeterra\Public\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Runeterra\Public\Player\RuneterraPlayerState.h">
+      <Filter>Source\Runeterra\Public\Player</Filter>
+    </ClCompile>
+    <Filter Include="Source\Runeterra\Public\Tags">
+      <UniqueIdentifier>{B4CF80FB-80A5-3B48-ADC0-7C1BCDC4C981}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\Runeterra\Public\Tags\WeaponTypeTags.h">
+      <Filter>Source\Runeterra\Public\Tags</Filter>
+    </ClCompile>
+    <Filter Include="Source\Runeterra\Public\UI">
+      <UniqueIdentifier>{9C562588-6E3D-3353-B10D-8E8070624155}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Runeterra\Public\UI\Player">
+      <UniqueIdentifier>{5405135F-792B-37DE-B8F4-0E477E444722}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\Runeterra\Public\UI\Player\PlayerHUD.h">
+      <Filter>Source\Runeterra\Public\UI\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Runeterra\Public\UI\Player\Reticle.h">
+      <Filter>Source\Runeterra\Public\UI\Player</Filter>
+    </ClCompile>
+    <Filter Include="Source\Runeterra\Public\Weapon">
+      <UniqueIdentifier>{14B720EE-B5BD-38B5-8F9F-E38F2DB8900D}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\Runeterra\Public\Weapon\Weapon.h">
+      <Filter>Source\Runeterra\Public\Weapon</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

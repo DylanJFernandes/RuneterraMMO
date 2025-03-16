@@ -8,7 +8,7 @@ public class Runeterra : ModuleRules
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 	
-		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "EnhancedInput","PhysicsCore", "GameLiftServerSDK","DedicatedServers" });
+		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "EnhancedInput","PhysicsCore", "GameLiftServerSDK","DedicatedServers","GameplayAbilities","GameplayTasks" });
 
 		PrivateDependencyModuleNames.AddRange(new string[] { "GameplayTags", "Slate", "SlateCore", "UMG"});
 

@@ -1094,6 +1094,74 @@
 			}
 		},
 		{
+			"File": "../../../Engine/Plugins/Developer/DumpGPUServices/DumpGPUServices.uplugin",
+			"Descriptor": 
+			{
+				"FileVersion": 3,
+				"Version": 1,
+				"VersionName": "1.0",
+				"FriendlyName": "Dump GPU Services",
+				"Description": "Implements automatic upload services for the DumpGPU command.",
+				"Category": "Rendering",
+				"CreatedBy": "Epic Games, Inc.",
+				"CreatedByURL": "https://epicgames.com",
+				"DocsURL": "",
+				"MarketplaceURL": "",
+				"SupportURL": "",
+				"EnabledByDefault": true,
+				"CanContainContent": false,
+				"IsExperimentalVersion": true,
+				"Modules": [
+					{
+						"Name": "DumpGPUServices",
+						"Type": "Runtime",
+						"LoadingPhase": "Default",
+						"TargetDenyList": [
+							"Server"
+						],
+						"TargetConfigurationDenyList": [
+							"Shipping"
+						]
+					}
+				]
+			}
+		},
+		{
+			"File": "../../../Engine/Plugins/Developer/PixWinPlugin/PixWinPlugin.uplugin",
+			"Descriptor": 
+			{
+				"FileVersion": 3,
+				"Version": 1,
+				"VersionName": "1.0",
+				"FriendlyName": "PIX on Windows GPU Capture Plugin",
+				"Description": "PIX on Windows graphics debugger integration.",
+				"Category": "Rendering",
+				"CreatedBy": "Epic Games, Inc.",
+				"CreatedByURL": "https://epicgames.com",
+				"DocsURL": "",
+				"MarketplaceURL": "",
+				"SupportURL": "",
+				"EnabledByDefault": true,
+				"CanContainContent": false,
+				"SupportedTargetPlatforms": [
+					"Win64"
+				],
+				"Modules": [
+					{
+						"Name": "PixWinPlugin",
+						"Type": "DeveloperTool",
+						"LoadingPhase": "PostConfigInit",
+						"PlatformAllowList": [
+							"Win64"
+						],
+						"TargetDenyList": [
+							"Server"
+						]
+					}
+				]
+			}
+		},
+		{
 			"File": "../../../Engine/Plugins/Developer/PluginUtils/PluginUtils.uplugin",
 			"Descriptor": 
 			{
@@ -1377,6 +1445,32 @@
 					{
 						"Name": "FacialAnimationEditor",
 						"Type": "Editor",
+						"LoadingPhase": "PreDefault"
+					}
+				]
+			}
+		},
+		{
+			"File": "../../../Engine/Plugins/Editor/GameplayTagsEditor/GameplayTagsEditor.uplugin",
+			"Descriptor": 
+			{
+				"FileVersion": 3,
+				"Version": 1,
+				"VersionName": "1.0",
+				"FriendlyName": "GameplayTagsEditor",
+				"Description": "GameplayTagsEditor provides blueprint nodes and editor UI to enable the use of GameplayTags for tagging assets and objects",
+				"Category": "Editor",
+				"CreatedBy": "Epic Games, Inc.",
+				"CreatedByURL": "https://epicgames.com",
+				"DocsURL": "",
+				"MarketplaceURL": "",
+				"SupportURL": "",
+				"EnabledByDefault": true,
+				"CanContainContent": false,
+				"Modules": [
+					{
+						"Name": "GameplayTagsEditor",
+						"Type": "UncookedOnly",
 						"LoadingPhase": "PreDefault"
 					}
 				]
@@ -3533,6 +3627,67 @@
 			}
 		},
 		{
+			"File": "../../../Engine/Plugins/Media/WmfMedia/WmfMedia.uplugin",
+			"Descriptor": 
+			{
+				"FileVersion": 3,
+				"Version": 2,
+				"VersionName": "2.0",
+				"FriendlyName": "WMF Media Player",
+				"Description": "Implements a media player using the Windows Media Foundation framework.",
+				"Category": "Media Players",
+				"CreatedBy": "Epic Games, Inc.",
+				"CreatedByURL": "https://epicgames.com",
+				"DocsURL": "https://forums.unrealengine.com/showthread.php?46879-Media-Framework-Documentation-for-4-5-Preview",
+				"MarketplaceURL": "",
+				"SupportURL": "",
+				"EnabledByDefault": true,
+				"CanContainContent": false,
+				"Modules": [
+					{
+						"Name": "WmfMedia",
+						"Type": "Runtime",
+						"LoadingPhase": "PostConfigInit",
+						"PlatformAllowList": [
+							"Win64"
+						],
+						"TargetDenyList": [
+							"Server"
+						]
+					},
+					{
+						"Name": "WmfMediaEditor",
+						"Type": "Editor",
+						"LoadingPhase": "PostEngineInit",
+						"TargetDenyList": [
+							"Server"
+						]
+					},
+					{
+						"Name": "WmfMediaFactory",
+						"Type": "Editor",
+						"LoadingPhase": "PostEngineInit",
+						"TargetDenyList": [
+							"Server"
+						]
+					},
+					{
+						"Name": "WmfMediaFactory",
+						"Type": "RuntimeNoCommandlet",
+						"LoadingPhase": "PostEngineInit",
+						"PlatformAllowList": [
+							"Mac",
+							"Linux",
+							"Win64"
+						],
+						"TargetDenyList": [
+							"Server"
+						]
+					}
+				]
+			}
+		},
+		{
 			"File": "../../../Engine/Plugins/MeshPainting/MeshPainting.uplugin",
 			"Descriptor": 
 			{
@@ -4572,6 +4727,44 @@
 			}
 		},
 		{
+			"File": "../../../Engine/Plugins/Runtime/DataRegistry/DataRegistry.uplugin",
+			"Descriptor": 
+			{
+				"FileVersion": 3,
+				"Version": 1,
+				"VersionName": "0.1",
+				"FriendlyName": "Data Registry",
+				"Description": "Adds Data Registry system that can be used as a generic interface for acquiring structure data from multiple sources at runtime",
+				"Category": "Gameplay",
+				"CreatedBy": "Epic Games, Inc.",
+				"CreatedByURL": "https://epicgames.com",
+				"DocsURL": "",
+				"MarketplaceURL": "",
+				"SupportURL": "",
+				"EnabledByDefault": false,
+				"CanContainContent": false,
+				"IsBetaVersion": true,
+				"Modules": [
+					{
+						"Name": "DataRegistry",
+						"Type": "Runtime",
+						"LoadingPhase": "PreDefault"
+					},
+					{
+						"Name": "DataRegistryEditor",
+						"Type": "UncookedOnly",
+						"LoadingPhase": "PreDefault"
+					}
+				],
+				"Plugins": [
+					{
+						"Name": "GameplayTagsEditor",
+						"Enabled": true
+					}
+				]
+			}
+		},
+		{
 			"File": "../../../Engine/Plugins/Runtime/Database/SQLiteCore/SQLiteCore.uplugin",
 			"Descriptor": 
 			{
@@ -4626,6 +4819,51 @@
 						"Name": "ExampleDeviceProfileSelector",
 						"Type": "RuntimeNoCommandlet",
 						"LoadingPhase": "PostConfigInit"
+					}
+				]
+			}
+		},
+		{
+			"File": "../../../Engine/Plugins/Runtime/GameplayAbilities/GameplayAbilities.uplugin",
+			"Descriptor": 
+			{
+				"FileVersion": 3,
+				"Version": 1,
+				"VersionName": "1.0",
+				"FriendlyName": "Gameplay Abilities",
+				"Description": "Adds GameplayEffect and GameplayAbility classes to handle complicated gameplay interactions.",
+				"Category": "Gameplay",
+				"CreatedBy": "Epic Games, Inc.",
+				"CreatedByURL": "https://epicgames.com",
+				"DocsURL": "",
+				"MarketplaceURL": "",
+				"SupportURL": "",
+				"EnabledByDefault": false,
+				"CanContainContent": false,
+				"Modules": [
+					{
+						"Name": "GameplayAbilities",
+						"Type": "Runtime",
+						"LoadingPhase": "PreDefault"
+					},
+					{
+						"Name": "GameplayAbilitiesEditor",
+						"Type": "UncookedOnly",
+						"LoadingPhase": "PreDefault"
+					}
+				],
+				"Plugins": [
+					{
+						"Name": "GameplayTagsEditor",
+						"Enabled": true
+					},
+					{
+						"Name": "Niagara",
+						"Enabled": true
+					},
+					{
+						"Name": "DataRegistry",
+						"Enabled": true
 					}
 				]
 			}
@@ -5525,6 +5763,46 @@
 							"Android",
 							"IOS"
 						]
+					}
+				]
+			}
+		},
+		{
+			"File": "../../../Engine/Plugins/Runtime/WebMMoviePlayer/WebMMoviePlayer.uplugin",
+			"Descriptor": 
+			{
+				"FileVersion": 3,
+				"Version": 1,
+				"VersionName": "1.0",
+				"FriendlyName": "Movie Player for WebM files",
+				"Description": "Movie Player for WebM files",
+				"Category": "Media Players",
+				"CreatedBy": "Epic Games, Inc.",
+				"CreatedByURL": "https://epicgames.com",
+				"DocsURL": "",
+				"MarketplaceURL": "",
+				"SupportURL": "",
+				"EnabledByDefault": true,
+				"CanContainContent": false,
+				"Modules": [
+					{
+						"Name": "WebMMoviePlayer",
+						"Type": "RuntimeNoCommandlet",
+						"LoadingPhase": "PreLoadingScreen",
+						"PlatformAllowList": [
+							"Win64",
+							"Linux",
+							"Mac"
+						],
+						"TargetDenyList": [
+							"Server"
+						]
+					}
+				],
+				"Plugins": [
+					{
+						"Name": "WebMMedia",
+						"Enabled": true
 					}
 				]
 			}
