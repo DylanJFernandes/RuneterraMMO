@@ -9,6 +9,7 @@
 #include "Weapon/Weapon.h"
 #include "TimerManager.h"
 #include "Interfaces/DamageableInterface.h"
+#include "Interfaces/PlayerInterface.h"
 #include "Kismet/GameplayStatics.h"
 
 UCombatComponent::UCombatComponent()
