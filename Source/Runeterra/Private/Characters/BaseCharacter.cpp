@@ -40,6 +40,23 @@ void ABaseCharacter::GiveDefaultAbilites()
 	}
 }
 
+void ABaseCharacter::InitDefaultAttributes()
+{
+	FGameplayEffectContextHandle EffectContext = AbilitySystemComponent->MakeEffectContext();
+	EffectContext.AddSourceObject(this);
+	const FGameplayEffectSpecHandle SpecHandle = AbilitySystemComponent->MakeOutgoingSpec(DefaultAttributeEffect,1.f,EffectContext);
+
+	if(SpecHandle.IsValid())
+	{
+		AbilitySystemComponent->ApplyGameplayEffectSpecToSelf(*SpecHandle.Data.Get());
+	}
+}
+
+URuneterraAttributeSet* ABaseCharacter::GetAttributeSet() const
+{
+	return AttributeSet;
+}
+
 void ABaseCharacter::OnDeathStarted(AActor* DyingActor, AActor* DeathInstigator)
 {
 	int32 Index = FMath::RandRange(0, DeathMontages.Num() - 1);

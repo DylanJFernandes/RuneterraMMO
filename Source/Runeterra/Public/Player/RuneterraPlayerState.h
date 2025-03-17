@@ -8,6 +8,7 @@
 #include "RuneterraPlayerState.generated.h"
 
 class URuneterraAbilitySystemComponent;
+class URuneterraAttributeSet;
 /**
  * 
  */
@@ -27,10 +28,14 @@ protected:
 
 #pragma region IAbilitySystemInterface Functions
 	virtual	UAbilitySystemComponent* GetAbilitySystemComponent() const override;
+	virtual URuneterraAttributeSet* GetAttributeSet() const;
 #pragma endregion  IAbilitySystemInterface Functions
 
 	UPROPERTY()
 	URuneterraAbilitySystemComponent* AbilitySystemComponent;
+
+	UPROPERTY()
+	TObjectPtr<URuneterraAttributeSet> AttributeSet;
 private:
 
 	UPROPERTY()

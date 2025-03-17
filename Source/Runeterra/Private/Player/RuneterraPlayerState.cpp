@@ -2,7 +2,7 @@
 
 
 #include "Player/RuneterraPlayerState.h"
-
+#include "AbilitySystem/RuneterraAttributeSet.h"
 #include "AbilitySystem/RuneterraAbilitySystemComponent.h"
 
 ARuneterraPlayerState::ARuneterraPlayerState()
@@ -21,10 +21,6 @@ void ARuneterraPlayerState::BeginPlay()
 void ARuneterraPlayerState::OnLogout(const FString& Username)
 {
 	SavePlayerStats(Username);
-}
-UAbilitySystemComponent* ARuneterraPlayerState::GetAbilitySystemComponent() const
-{
-	return AbilitySystemComponent;
 }
 
 
@@ -50,5 +46,15 @@ void ARuneterraPlayerState::SavePlayerStats(const FString& Username)
 
 	// Save PlayerStats to DB
 	RecordPlayerStats(PlayerStatsInput);
+}
+
+UAbilitySystemComponent* ARuneterraPlayerState::GetAbilitySystemComponent() const
+{
+	return AbilitySystemComponent;
+}
+
+URuneterraAttributeSet* ARuneterraPlayerState::GetAttributeSet() const
+{
+	return AttributeSet;
 }
 
