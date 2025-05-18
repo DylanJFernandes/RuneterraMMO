@@ -25,8 +25,6 @@ public:
 	bool bPawnAlive;
 	virtual void OnPossess(APawn* InPawn) override;
 	virtual void OnRep_PlayerState() override;
-	virtual void EnableInput(class APlayerController* PlayerController) override;
-	virtual void DisableInput(class APlayerController* PlayerController) override;
 
 	UPROPERTY(BlueprintAssignable)
 	FOnPlayerStateReplicated OnPlayerStateReplicated;
@@ -50,19 +48,10 @@ private:
 	TObjectPtr<UInputAction> LookAction;
 
 	UPROPERTY(EditAnywhere, Category="Input")
-	TObjectPtr<UInputAction> CrouchAction;
-
-	UPROPERTY(EditAnywhere, Category="Input")
-	TObjectPtr<UInputAction> JumpAction;	
-
-	UPROPERTY(EditAnywhere, Category="Input")
 	TObjectPtr<UInputAction> GameMenuAction;	
 
 	void Input_Move(const FInputActionValue& InputActionValue);
 	void Input_Look(const FInputActionValue& InputActionValue);
-	void Input_Crouch();
-	void Input_Jump();
-	
 	
 	void Input_GameMenu();
 	bool bGameMenuOpen;

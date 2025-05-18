@@ -2,8 +2,6 @@
 
 
 #include "Characters/BaseCharacter.h"
-
-#include "Components/Health/HealthComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Game/RuneterraGameMode.h"
 #include "Player/RuneterraPlayerController.h"
@@ -17,10 +15,6 @@ ABaseCharacter::ABaseCharacter()
 	GetMesh()->bOnlyOwnerSee = false;
 	GetMesh()->bOwnerNoSee = true;
 	GetMesh()->bReceivesDecals = false;
-
-	HealthComponent = CreateDefaultSubobject<UHealthComponent>("Health");
-	HealthComponent->SetIsReplicated(true);
-	
 }
 
 UAbilitySystemComponent* ABaseCharacter::GetAbilitySystemComponent() const
@@ -85,11 +79,5 @@ void ABaseCharacter::OnDeathStarted(AActor* DyingActor, AActor* DeathInstigator)
 void ABaseCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-
-	if (IsValid(HealthComponent))
-	{
-		HealthComponent->OnDeathStarted.AddDynamic(this, &ABaseCharacter::OnDeathStarted);
-	}
-	
 }
 

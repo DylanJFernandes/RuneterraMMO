@@ -6,7 +6,6 @@
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "InputMappingContext.h"
-#include "Interfaces/PlayerInterface.h"
 
 ARuneterraPlayerController::ARuneterraPlayerController()
 {
@@ -27,24 +26,6 @@ void ARuneterraPlayerController::OnRep_PlayerState()
 	OnPlayerStateReplicated.Broadcast();
 }
 
-void ARuneterraPlayerController::EnableInput(APlayerController* PlayerController)
-{
-	Super::EnableInput(PlayerController);
-	if (IsValid(GetPawn()) && GetPawn()->Implements<UPlayerInterface>())
-	{
-		IPlayerInterface::Execute_EnableGameActions(GetPawn(), true);
-	}
-}
-
-void ARuneterraPlayerController::DisableInput(APlayerController* PlayerController)
-{
-	Super::DisableInput(PlayerController);
-	if (IsValid(GetPawn()) && GetPawn()->Implements<UPlayerInterface>())
-	{
-		IPlayerInterface::Execute_EnableGameActions(GetPawn(), false);
-	}
-}
-
 void ARuneterraPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
@@ -63,8 +44,6 @@ void ARuneterraPlayerController::SetupInputComponent()
 	UEnhancedInputComponent* PlayerInputComponent = CastChecked<UEnhancedInputComponent>(InputComponent);
 	PlayerInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &ARuneterraPlayerController::Input_Move);
 	PlayerInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &ARuneterraPlayerController::Input_Look);
-	PlayerInputComponent->BindAction(CrouchAction, ETriggerEvent::Started, this, &ARuneterraPlayerController::Input_Crouch);
-	PlayerInputComponent->BindAction(JumpAction, ETriggerEvent::Started, this, &ARuneterraPlayerController::Input_Jump);
 	
 	PlayerInputComponent->BindAction(GameMenuAction, ETriggerEvent::Triggered, this, &ARuneterraPlayerController::Input_GameMenu);
 }
@@ -91,20 +70,6 @@ void ARuneterraPlayerController::Input_Look(const FInputActionValue& InputAction
 	const FVector2D InputAxisVector = InputActionValue.Get<FVector2D>();
 	AddYawInput(InputAxisVector.X);
 	AddPitchInput(InputAxisVector.Y);
-}
-
-void ARuneterraPlayerController::Input_Crouch()
-{
-	if (!bPawnAlive) return;
-	if (GetPawn() == nullptr || !GetPawn()->Implements<UPlayerInterface>()) return;
-	IPlayerInterface::Execute_Initiate_Crouch(GetPawn());
-}
-
-void ARuneterraPlayerController::Input_Jump()
-{
-	if (!bPawnAlive) return;
-	if (GetPawn() == nullptr || !GetPawn()->Implements<UPlayerInterface>()) return;
-	IPlayerInterface::Execute_Initiate_Jump(GetPawn());
 }
 
 void ARuneterraPlayerController::Input_GameMenu()

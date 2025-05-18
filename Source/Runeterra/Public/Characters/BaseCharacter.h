@@ -55,14 +55,9 @@ protected:
 	UPROPERTY()
 	TObjectPtr<URuneterraAttributeSet> AttributeSet;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
-	TObjectPtr<UHealthComponent> HealthComponent;
-
-	
-
 private:
+	
 	UFUNCTION()
 	void OnDeathStarted(AActor* DyingActor, AActor* DeathInstigator);
 	
-
 };
